@@ -18,7 +18,7 @@ class PassengerRepository:
         :param last_name: Last name of the passenger
         :type last_name: str
         :param passport_number: Passport number of the passenger
-        :type passport_number: int
+        :type passport_number: str
         """
 
         if not is_passenger_data_valid(self, first_name, last_name, passport_number):
@@ -70,7 +70,7 @@ class PassengerRepository:
         :param first_name: the new first name, can be None to be left unchanged
         :type first_name: str or None
         :param passport_number: the new passport number, can be None to be left unchanged
-        :type passport_number: int or None
+        :type passport_number: str or None
         """
 
         if not is_passenger_index_valid(self, index):

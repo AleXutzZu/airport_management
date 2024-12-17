@@ -12,10 +12,7 @@ class PassengerInputValidatorsTest(unittest.TestCase):
             get_validated_index("abc")
 
     def test_passenger_data_validator(self):
-        with self.assertRaises(InvalidInputError):
-            get_validated_passenger_data(None, None, "abc")
 
-        with self.assertRaises(InvalidInputError):
-            get_validated_passenger_data(None, None, "12a")
-
-        self.assertEqual(("A", "B", 10), get_validated_passenger_data("A", "B", "10"))
+        self.assertEqual((None, None, "abc"),   get_validated_passenger_data(None, None, "abc"))
+        self.assertEqual((None, None, "12a"),get_validated_passenger_data(None, None, "12a"))
+        self.assertEqual(("A", "B", "10"), get_validated_passenger_data("A", "B", "10"))

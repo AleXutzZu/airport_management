@@ -9,9 +9,9 @@ class PassengerRepositoryTest(unittest.TestCase):
     def setUp(self):
         self.repository = PassengerRepository()
         self.dummy_passengers = [
-            Passenger("A", "B", 100),
-            Passenger("C", "D", 200),
-            Passenger("E", "F", 300),
+            Passenger("A", "B", "100"),
+            Passenger("C", "D", "200"),
+            Passenger("E", "F", "300"),
         ]
 
         for passenger in self.dummy_passengers:
@@ -20,7 +20,7 @@ class PassengerRepositoryTest(unittest.TestCase):
     def test_reads_and_creation(self):
         self.assertEqual(3, len(self.repository.passengers))
 
-        self.assertEqual(200, self.repository.find_passenger_by_index(1).passport_number)
+        self.assertEqual("200", self.repository.find_passenger_by_index(1).passport_number)
 
         with self.assertRaises(IndexError):
             self.repository.find_passenger_by_index(10)

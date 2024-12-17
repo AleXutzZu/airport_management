@@ -10,7 +10,7 @@ class Passenger:
         :param last_name: the last name of the passenger
         :type last_name: str
         :param passport_number: the passport number of the passenger
-        :type passport_number: int
+        :type passport_number: str
         """
         self.__first_name = first_name
         self.__last_name = last_name
@@ -60,7 +60,7 @@ class Passenger:
         """
         Returns the passport number of the passenger
         :return: the passport number of the passenger
-        :rtype: int
+        :rtype: str
         """
         return self.__passport_number
 
@@ -69,7 +69,7 @@ class Passenger:
         """
         Sets the passport number of the passenger
         :param value: the passport number of the passenger
-        :type value: int
+        :type value: str
         """
         self.__passport_number = value
 

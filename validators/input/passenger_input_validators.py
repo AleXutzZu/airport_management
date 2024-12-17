@@ -21,10 +21,7 @@ def get_validated_passenger_data(first_name, last_name, passport_number):
         pass
 
     if passport_number is not None:
-        try:
-            passport_number = int(passport_number)
-        except ValueError:
-            raise InvalidInputError("Passport number must be an integer")
+        pass
 
     return first_name, last_name, passport_number
 

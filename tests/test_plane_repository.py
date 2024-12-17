@@ -11,9 +11,9 @@ class PlaneRepositoryTest(unittest.TestCase):
         self.repository = PlaneRepository()
 
         self.dummy_passengers = [
-            Passenger("A", "B", 1),
-            Passenger("C", "D", 2),
-            Passenger("E", "F", 3),
+            Passenger("A", "B", "1"),
+            Passenger("C", "D", "2"),
+            Passenger("E", "F", "3"),
         ]
 
         self.dummy_planes = [

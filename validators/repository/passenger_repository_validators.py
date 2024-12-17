@@ -16,7 +16,7 @@ def is_passport_number_valid(repository, passport_number):
     :param repository: the Passenger repository
     :type repository: PassengerRepository
     :param passport_number: the passport number to check
-    :type passport_number: int
+    :type passport_number: str
     :return: True if the passport number is valid, False otherwise
     :rtype: bool
     """
@@ -29,7 +29,7 @@ def is_passenger_data_valid(repository, first_name, last_name, passport_number):
     :param repository: the Passenger repository
     :type repository: PassengerRepository
     :param passport_number: the new passport number to check, can be None to be left unchanged
-    :type passport_number: int or None
+    :type passport_number: str or None
     :param last_name: the new last name to check, can be None to be left unchanged
     :type last_name: str or None
     :param first_name: the new first name to check, can be None to be left unchanged
@@ -38,6 +38,8 @@ def is_passenger_data_valid(repository, first_name, last_name, passport_number):
     :rtype: bool
     """
     if passport_number is not None:
+        if len(passport_number) < 1:
+            return False
         if not is_passport_number_valid(repository, passport_number):
             return False
 
