@@ -21,4 +21,16 @@ class PlaneInputValidatorsTest(unittest.TestCase):
         with self.assertRaises(InvalidInputError):
             get_validated_plane_data(None, "100", None, "1 2 3", "abc")
 
+        with self.assertRaises(InvalidInputError):
+            get_validated_plane_data(None, "0", None, "1 2 3", None)
+
+        with self.assertRaises(InvalidInputError):
+            get_validated_plane_data(None, "10", None, "1 2 3", "0")
+
+        with self.assertRaises(InvalidInputError):
+            get_validated_plane_data("", None, None, "1 2 3", None)
+
+        with self.assertRaises(InvalidInputError):
+            get_validated_plane_data(None, None, "", "1 2 3", None)
+
         self.assertIsNotNone(get_validated_plane_data("a", "100", "b", "1", "20"))

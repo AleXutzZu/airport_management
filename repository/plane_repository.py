@@ -1,6 +1,5 @@
 from model.plane import Plane
-from validators.repository.plane_repository_validators import is_identification_number_valid, is_plane_index_valid, \
-    is_plane_data_valid
+from validators.repository.plane_repository_validators import is_identification_number_valid, is_plane_index_valid
 
 
 class PlaneRepository:
@@ -34,7 +33,7 @@ class PlaneRepository:
         :param identification_number: the identification number
         :type identification_number: int
         """
-        if not is_plane_data_valid(self, airline, seats, destination, passengers, identification_number):
+        if not is_identification_number_valid(self, identification_number):
             raise ValueError("Data is invalid")
 
         plane = Plane(airline, seats, destination, passengers, identification_number)
@@ -85,10 +84,9 @@ class PlaneRepository:
         if not is_plane_index_valid(self, index):
             raise IndexError("Plane index is invalid")
 
-        if not is_plane_data_valid(self, airline, seats, destination, passengers, identification_number):
-            raise ValueError("Invalid data")
-
         if identification_number is not None:
+            if not is_identification_number_valid(self, identification_number):
+                raise ValueError("Invalid data")
             self.__planes[index].identification_number = identification_number
 
         if airline is not None:

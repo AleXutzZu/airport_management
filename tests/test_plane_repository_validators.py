@@ -3,8 +3,7 @@ import unittest
 from model.passenger import Passenger
 from model.plane import Plane
 from repository.plane_repository import PlaneRepository
-from validators.repository.plane_repository_validators import is_plane_index_valid, is_identification_number_valid, \
-    is_plane_data_valid
+from validators.repository.plane_repository_validators import is_plane_index_valid, is_identification_number_valid
 
 
 class PlaneRepositoryValidatorsTest(unittest.TestCase):
@@ -13,9 +12,9 @@ class PlaneRepositoryValidatorsTest(unittest.TestCase):
         self.repository = PlaneRepository()
 
         self.dummy_passengers = [
-            Passenger("A", "B", 100),
-            Passenger("C", "D", 200),
-            Passenger("E", "F", 300),
+            Passenger("A", "B", "100"),
+            Passenger("C", "D", "200"),
+            Passenger("E", "F", "300"),
         ]
 
         self.dummy_planes = [
@@ -37,12 +36,3 @@ class PlaneRepositoryValidatorsTest(unittest.TestCase):
         self.assertTrue(is_identification_number_valid(self.repository, 100))
         self.assertTrue(is_identification_number_valid(self.repository, 200))
         self.assertFalse(is_identification_number_valid(self.repository, 1))
-
-    def test_valid_update_data(self):
-        self.assertTrue(is_plane_data_valid(self.repository, "X", 10, None, None, 23))
-        self.assertTrue(is_plane_data_valid(self.repository, "Y", 20, None, None, 12))
-        self.assertFalse(is_plane_data_valid(self.repository, "X", 10, None, None, 2))
-        self.assertFalse(is_plane_data_valid(self.repository, "", 10, None, None, None))
-        self.assertFalse(is_plane_data_valid(self.repository, "ZYX", -23, None, None, None))
-        self.assertFalse(is_plane_data_valid(self.repository, "ZYX", 14, "", None, None))
-        self.assertTrue(is_plane_data_valid(self.repository, "ZYX", 14, "ABC", [], None))
