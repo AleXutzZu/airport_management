@@ -59,7 +59,6 @@ def is_plane_data_valid(repository, airline, seats, destination, passengers, ide
             return False
 
     if passengers is not None:
-        if len(passengers) < 1:
-            return False
+        pass
 
     return True

@@ -14,9 +14,10 @@ def get_validated_plane_data(airline, seats, destination, passengers, identifica
     if destination is not None:
         pass
 
+    passenger_indices = None
     if passengers is not None:
         try:
-            passengers = [int(x) for x in passengers.split()]
+            passenger_indices = [int(x) for x in passengers.split()]
         except ValueError:
             raise InvalidInputError("Expected a list of integers")
 
@@ -26,7 +27,7 @@ def get_validated_plane_data(airline, seats, destination, passengers, identifica
         except ValueError:
             raise InvalidInputError("Identification number must be an integer")
 
-    return airline, seats, destination, passengers, identification_number
+    return airline, seats, destination, passenger_indices, identification_number
 
 
 def get_validated_index(index):

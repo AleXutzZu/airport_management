@@ -45,4 +45,4 @@ class PlaneRepositoryValidatorsTest(unittest.TestCase):
         self.assertFalse(is_plane_data_valid(self.repository, "", 10, None, None, None))
         self.assertFalse(is_plane_data_valid(self.repository, "ZYX", -23, None, None, None))
         self.assertFalse(is_plane_data_valid(self.repository, "ZYX", 14, "", None, None))
-        self.assertFalse(is_plane_data_valid(self.repository, "ZYX", 14, "ABC", [], None))
+        self.assertTrue(is_plane_data_valid(self.repository, "ZYX", 14, "ABC", [], None))
