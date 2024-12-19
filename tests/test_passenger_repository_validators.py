@@ -2,9 +2,7 @@ import unittest
 
 from model.passenger import Passenger
 from repository.passenger_repository import PassengerRepository
-from validators.repository.passenger_repository_validators import is_passenger_index_valid, is_passport_number_valid, \
-    is_passenger_data_valid
-
+from validators.repository.passenger_repository_validators import is_passenger_index_valid, is_passport_number_valid
 
 class PassengerRepositoryValidatorsTest(unittest.TestCase):
 
@@ -28,12 +26,3 @@ class PassengerRepositoryValidatorsTest(unittest.TestCase):
         self.assertTrue(is_passport_number_valid(self.repository, "0"))
         self.assertTrue(is_passport_number_valid(self.repository, "20"))
         self.assertFalse(is_passport_number_valid(self.repository, "100"))
-
-    def test_valid_update_data(self):
-        self.assertTrue(is_passenger_data_valid(self.repository, None, None, "0"))
-        self.assertTrue(is_passenger_data_valid(self.repository, "A", "B", "0"))
-        self.assertTrue(is_passenger_data_valid(self.repository, None, None, "20"))
-        self.assertFalse(is_passenger_data_valid(self.repository, None, None, "100"))
-        self.assertFalse(is_passenger_data_valid(self.repository, "", None, None))
-        self.assertFalse(is_passenger_data_valid(self.repository, "A", "", None))
-        self.assertFalse(is_passenger_data_valid(self.repository, "A", "B", "200"))

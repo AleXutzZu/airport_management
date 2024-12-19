@@ -1,6 +1,5 @@
 from model.passenger import Passenger
-from validators.repository.passenger_repository_validators import is_passenger_index_valid, is_passport_number_valid, \
-    is_passenger_data_valid
+from validators.repository.passenger_repository_validators import is_passenger_index_valid, is_passport_number_valid
 
 
 class PassengerRepository:
@@ -21,7 +20,7 @@ class PassengerRepository:
         :type passport_number: str
         """
 
-        if not is_passenger_data_valid(self, first_name, last_name, passport_number):
+        if not is_passport_number_valid(self, passport_number):
             raise ValueError("Data is invalid")
 
         passenger = Passenger(first_name, last_name, passport_number)
@@ -76,10 +75,9 @@ class PassengerRepository:
         if not is_passenger_index_valid(self, index):
             raise IndexError("Invalid index")
 
-        if not is_passenger_data_valid(self, first_name, last_name, passport_number):
-            raise ValueError("Invalid update data")
-
         if passport_number is not None:
+            if not is_passport_number_valid(self, passport_number):
+                raise ValueError("Invalid data")
             self.__passengers[index].passport_number = passport_number
 
         if last_name is not None:

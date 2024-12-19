@@ -3,7 +3,7 @@ from exceptions.invalid_input import InvalidInputError
 
 def get_validated_passenger_data(first_name, last_name, passport_number):
     """
-    Validates passenger data
+    Validates and returns passenger data necessary to create or update a passenger
     :param first_name: the first name
     :type first_name: str or None
     :param last_name: the last name
@@ -15,13 +15,16 @@ def get_validated_passenger_data(first_name, last_name, passport_number):
     """
 
     if first_name is not None:
-        pass
+        if len(first_name) < 1:
+            raise InvalidInputError("First name cannot be empty")
 
     if last_name is not None:
-        pass
+        if len(last_name) < 1:
+            raise InvalidInputError("Last name cannot be empty")
 
     if passport_number is not None:
-        pass
+        if len(passport_number) < 1:
+            raise InvalidInputError("Passport number cannot be empty")
 
     return first_name, last_name, passport_number
 
