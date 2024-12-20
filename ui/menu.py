@@ -3,13 +3,9 @@ from model.passenger import Passenger
 from model.plane import Plane
 from repository.passenger_repository import PassengerRepository
 from repository.plane_repository import PlaneRepository
-from service.passenger_controller import create_new_passenger, get_passenger_by_index, delete_passenger_by_index, \
-    update_passenger_by_index, get_all_passengers
-from service.plane_controller import get_plane_by_index, delete_plane_by_index, create_new_plane, update_plane_by_index, \
-    get_all_planes, get_sorted_passengers_on_plane_by_last_name, get_sorted_planes_by_passenger_count, \
-    get_sorted_planes_by_count_of_passengers_matching_prefix, get_sorted_planes_by_concatenation, \
-    get_planes_with_common_passport_prefixes, get_passengers_on_plane_matching_prefix, \
-    get_all_planes_containing_passenger_with_name
+from service.passenger_controller import PassengerController
+from service.plane_controller import PlaneController
+from ui.application_ui import ApplicationUI
 
 
 def print_menu():
@@ -56,64 +52,66 @@ def start():
     ]
 
     for passenger in dummy_passengers:
-        passenger_repository.add_passenger(passenger.first_name, passenger.last_name, passenger.passport_number)
+        passenger_repository.add_passenger(passenger)
 
     for plane in dummy_planes:
-        plane_repository.add_plane(plane.airline, plane.seats, plane.destination, plane.passengers,
-                                   plane.identification_number)
+        plane_repository.add_plane(plane)
+
+    plane_controller = PlaneController(plane_repository)
+    passenger_controller = PassengerController(passenger_repository)
+    application_ui = ApplicationUI(plane_controller, passenger_controller)
 
     while True:
         print_menu()
-        choice = input("Enter a command: ")
-
-        if choice == "1":
-            execute_command(create_new_passenger, passenger_repository)
-        elif choice == "2":
-            execute_command(get_passenger_by_index, passenger_repository)
-        elif choice == "3":
-            execute_command(delete_passenger_by_index, passenger_repository, plane_repository)
-        elif choice == "4":
-            execute_command(update_passenger_by_index, passenger_repository)
-        elif choice == "5":
-            execute_command(get_all_passengers, passenger_repository)
-        elif choice == "6":
-            execute_command(create_new_plane, plane_repository, passenger_repository)
-        elif choice == "7":
-            execute_command(get_plane_by_index, plane_repository)
-        elif choice == "8":
-            execute_command(delete_plane_by_index, plane_repository)
-        elif choice == "9":
-            execute_command(update_plane_by_index, plane_repository, passenger_repository)
-        elif choice == "10":
-            execute_command(get_all_planes, plane_repository)
-        elif choice == "11":
-            execute_command(get_sorted_passengers_on_plane_by_last_name, plane_repository)
-        elif choice == "12":
-            execute_command(get_sorted_planes_by_passenger_count, plane_repository)
-        elif choice == "13":
-            execute_command(get_sorted_planes_by_count_of_passengers_matching_prefix, plane_repository)
-        elif choice == "14":
-            execute_command(get_sorted_planes_by_concatenation, plane_repository)
-        elif choice == "15":
-            execute_command(get_planes_with_common_passport_prefixes, plane_repository)
-        elif choice == "16":
-            execute_command(get_passengers_on_plane_matching_prefix, plane_repository)
-        elif choice == "17":
-            execute_command(get_all_planes_containing_passenger_with_name, plane_repository)
-        elif choice == "0":
-            break
-        else:
-            print("Invalid command, try again")
+        try:
+            data = execute_command(application_ui)
+            if data is not None:
+                if isinstance(data, list):
+                    print(*data, sep="\n")
+                else:
+                    print(data)
+        except InvalidInputError as e:
+            print(f"Input is invalid, please try again ({e.args[0]})")
 
 
-def execute_command(function, *repositories):
-    try:
-        data = function(*repositories)
-        if data is not None:
-            if isinstance(data, list):
-                print(*data, sep="\n")
-            else:
-                print(data)
+def execute_command(application_ui):
+    choice = input("Enter a command: ")
 
-    except InvalidInputError as e:
-        print(f"Input is invalid, please try again ({e.args[0]})")
+    if choice == "1":
+        return application_ui.add_passenger()
+    elif choice == "2":
+        return application_ui.get_passenger_by_index()
+    elif choice == "3":
+        return application_ui.delete_passenger_by_index()
+    elif choice == "4":
+        return application_ui.update_passenger_by_index()
+    elif choice == "5":
+        return application_ui.get_all_passengers()
+    elif choice == "6":
+        return application_ui.add_plane()
+    elif choice == "7":
+        return application_ui.get_plane_by_index()
+    elif choice == "8":
+        return application_ui.delete_plane_by_index()
+    elif choice == "9":
+        return application_ui.update_plane_by_index()
+    elif choice == "10":
+        return application_ui.get_all_planes()
+    elif choice == "11":
+        return application_ui.get_sorted_passengers_on_plane_by_last_name()
+    elif choice == "12":
+        return application_ui.get_sorted_planes_by_passenger_count()
+    elif choice == "13":
+        return application_ui.get_sorted_planes_by_count_of_passengers_matching_prefix()
+    elif choice == "14":
+        return application_ui.get_sorted_planes_by_concatenation()
+    elif choice == "15":
+        return application_ui.get_planes_with_common_passport_prefixes()
+    elif choice == "16":
+        return application_ui.get_passengers_on_plane_containing_string()
+    elif choice == "17":
+        return application_ui.get_all_planes_containing_passenger_with_name()
+    elif choice == "0":
+        exit(0)
+    else:
+        print("Invalid command, try again")

@@ -74,7 +74,24 @@ class Passenger:
         self.__passport_number = value
 
     def __eq__(self, other):
+        """
+        Checks for equality between two Passenger objects
+        :param other: the other passenger to compare with
+        :type other: Passenger
+        :return: True if all of their fields match, False otherwise
+        :rtype: bool
+        """
         if not isinstance(other, Passenger):
             return False
 
         return self.first_name == other.first_name and self.last_name == other.last_name and self.passport_number == other.passport_number
+
+    def compare_by_last_name(self, other):
+        """
+        Compares this passenger to another passenger by their last names. This function provides strict ordering.
+        :param other: the other passenger to compare with
+        :type other: Passenger
+        :return: True if this object comes before the other passenger, False otherwise
+        :rtype: bool
+        """
+        return self.last_name < other.last_name

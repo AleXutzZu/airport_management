@@ -4,6 +4,7 @@ from model.passenger import Passenger
 from repository.passenger_repository import PassengerRepository
 from validators.repository.passenger_repository_validators import is_passenger_index_valid, is_passport_number_valid
 
+
 class PassengerRepositoryValidatorsTest(unittest.TestCase):
 
     def setUp(self):
@@ -15,7 +16,7 @@ class PassengerRepositoryValidatorsTest(unittest.TestCase):
         ]
 
         for passenger in self.dummy_passengers:
-            self.repository.add_passenger(passenger.first_name, passenger.last_name, passenger.passport_number)
+            self.repository.add_passenger(passenger)
 
     def test_valid_index(self):
         self.assertTrue(is_passenger_index_valid(self.repository, 0))

@@ -125,3 +125,34 @@ class Plane:
         :type value: int
         """
         self.__identification_number = value
+
+    def __eq__(self, other):
+        if not isinstance(other, Plane):
+            return False
+        return (self.passengers == other.passengers
+                and self.destination == other.destination
+                and self.airline == other.airline
+                and self.seats == self.seats
+                and self.identification_number == other.identification_number)
+
+    def compare_by_passenger_count(self, other):
+        """
+        Compares two planes by their number of passengers. This functions provides strict ordering.
+        :param other: the other plane to compare with
+        :type other: Plane
+        :return: True if the object comes before the other, False otherwise
+        :rtype: bool
+        """
+        return len(self.passengers) < len(other.passengers)
+
+    def compare_by_passenger_destination_concatenation(self, other):
+        """
+        Compares two planes by the concatenation of the number of passengers and the destination. This function
+        provides strict ordering.
+        :param other: the other plane to compare with
+        :return: True if the object comes before the other, False otherwise
+        :rtype: bool
+        """
+        str_left = str(len(self.passengers)) + self.destination
+        str_right = str(len(other.passengers)) + other.destination
+        return str_left < str_right

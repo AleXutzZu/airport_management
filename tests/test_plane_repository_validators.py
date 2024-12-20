@@ -24,8 +24,7 @@ class PlaneRepositoryValidatorsTest(unittest.TestCase):
         ]
 
         for plane in self.dummy_planes:
-            self.repository.add_plane(plane.airline, plane.seats, plane.destination, plane.passengers,
-                                      plane.identification_number)
+            self.repository.add_plane(plane)
 
     def test_valid_index(self):
         self.assertTrue(is_plane_index_valid(self.repository, 0))
