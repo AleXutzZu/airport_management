@@ -221,3 +221,70 @@ class PlaneController:
                     answer.append(plane)
                     break
         return answer
+
+    def get_all_groups_of_passengers_with_differing_last_names(self, index, group_size):
+        """
+        Returns a list with all possible combinations of passengers on a given plane for which their last names
+        differ
+        :param index: the index of the plane
+        :type index: int
+        :param group_size: the size of the group
+        :type group_size: int
+        :return: a list with all possible combinations, each combination being a list of size group_size
+        :rtype: list
+        """
+        plane = self.get_plane_by_index(index)
+
+        def is_candidate(group):
+            for pos in group[:len(group) - 1]:
+                if pos >= group[-1]:
+                    return False
+                if plane.passengers[pos].last_name == plane.passengers[group[-1]].last_name:
+                    return False
+            return True
+
+        def generate_groups(step, current_group):
+            for pos in range(len(plane.passengers)):
+                current_group.append(pos)
+                if is_candidate(current_group):
+                    if step == group_size:
+                        yield [plane.passengers[p] for p in current_group]
+                    else:
+                        yield from generate_groups(step + 1, current_group)
+                current_group.pop()
+
+        return list(generate_groups(1, []))
+
+    def get_all_groups_of_planes_with_same_destination_but_other_airlines(self, group_size):
+        """
+        Returns a list with all possible combinations of planes for which the airline company differs but all planes
+        have the same destination
+        :param group_size: the size of the group
+        :type group_size: int
+        :return: a list with all possible combinations, each combination being a list of size group_size
+        :rtype: list
+        """
+
+        def is_candidate(group):
+            for pos in group[:len(group) - 1]:
+                if pos >= group[-1]:
+                    return False
+
+                if self.get_plane_by_index(pos).airline == self.get_plane_by_index(group[-1]).airline:
+                    return False
+
+                if self.get_plane_by_index(pos).destination != self.get_plane_by_index(group[-1]).destination:
+                    return False
+            return True
+
+        def generate_groups(step, current_group):
+            for pos in range(len(self.get_all_planes())):
+                current_group.append(pos)
+                if is_candidate(current_group):
+                    if step == group_size:
+                        yield [self.get_plane_by_index(p) for p in current_group]
+                    else:
+                        yield from generate_groups(step + 1, current_group)
+                current_group.pop()
+
+        return list(generate_groups(1, []))

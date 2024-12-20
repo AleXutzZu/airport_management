@@ -1,7 +1,8 @@
 import unittest
 
 from exceptions.invalid_input import InvalidInputError
-from validators.input.plane_input_validators import get_validated_index, get_validated_plane_data
+from validators.input.plane_input_validators import get_validated_index, get_validated_plane_data, \
+    get_validated_group_size
 
 
 class PlaneInputValidatorsTest(unittest.TestCase):
@@ -34,3 +35,11 @@ class PlaneInputValidatorsTest(unittest.TestCase):
             get_validated_plane_data(None, None, "", "1 2 3", None)
 
         self.assertIsNotNone(get_validated_plane_data("a", "100", "b", "1", "20"))
+
+    def test_group_size_validator(self):
+        with self.assertRaises(InvalidInputError):
+            get_validated_group_size("-10")
+        with self.assertRaises(InvalidInputError):
+            get_validated_group_size("0")
+
+        self.assertEqual(10, get_validated_group_size("10"))

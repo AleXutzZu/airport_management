@@ -18,7 +18,7 @@ class PlaneControllerTest(unittest.TestCase):
 
         self.dummy_planes = [
             Plane("A", 10, "d1", [self.dummy_passengers[0]], 1),
-            Plane("B", 200, "d2", [self.dummy_passengers[0], self.dummy_passengers[2]], 2),
+            Plane("B", 200, "d1", [self.dummy_passengers[0], self.dummy_passengers[2]], 2),
             Plane("C", 50, "d3", self.dummy_passengers, 3),
         ]
 
@@ -126,3 +126,23 @@ class PlaneControllerTest(unittest.TestCase):
         planes = self.controller.get_all_planes_containing_passenger_with_name("AC")
 
         self.assertEqual(planes, [self.dummy_planes[2]])
+
+    def test_generate_passenger_groups(self):
+        solutions = self.controller.get_all_groups_of_passengers_with_differing_last_names(2, 2)
+
+        correct = [
+            [self.dummy_passengers[0], self.dummy_passengers[1]],
+            [self.dummy_passengers[0], self.dummy_passengers[2]],
+            [self.dummy_passengers[1], self.dummy_passengers[2]]
+        ]
+
+        self.assertEqual(solutions, correct)
+
+    def test_generate_plane_groups(self):
+        solutions = self.controller.get_all_groups_of_planes_with_same_destination_but_other_airlines(2)
+
+        correct = [
+            [self.dummy_planes[0], self.dummy_planes[1]],
+        ]
+
+        self.assertEqual(solutions, correct)

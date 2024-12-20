@@ -1,7 +1,8 @@
 from exceptions.invalid_input import InvalidInputError
 from service.plane_controller import PlaneController
 from validators.input.passenger_input_validators import get_validated_passenger_data
-from validators.input.plane_input_validators import get_validated_plane_data, get_validated_index
+from validators.input.plane_input_validators import get_validated_plane_data, get_validated_index, \
+    get_validated_group_size
 from service.passenger_controller import PassengerController
 
 
@@ -269,3 +270,31 @@ class ApplicationUI:
 
         name = input("Enter passenger's name: ")
         return self.__plane_controller.get_all_planes_containing_passenger_with_name(name)
+
+    def generate_groups_of_passengers_with_differing_last_names(self):
+        """
+        Reads the index of a plane and a group size and generates all groups of passengers which are on this plane
+        and have differing last names
+        :return: the list of groups
+        :rtype: list
+        """
+        index = input("Enter index of plane: ")
+        index = get_validated_index(index)
+
+        group_size = input("Enter the size of the groups: ")
+        group_size = get_validated_group_size(group_size)
+
+        return self.__plane_controller.get_all_groups_of_passengers_with_differing_last_names(index, group_size)
+
+    def generate_groups_of_planes_with_same_destination_and_differing_airline(self):
+        """
+        Reads the group size and generates all groups of planes which have the same destination but are owned
+        by different airlines
+        :return: the list of groups
+        :rtype: list
+        """
+
+        group_size = input("Enter the size of the groups: ")
+        group_size = get_validated_group_size(group_size)
+
+        return self.__plane_controller.get_all_groups_of_planes_with_same_destination_but_other_airlines(group_size)

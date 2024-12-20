@@ -64,3 +64,19 @@ def get_validated_index(index):
     except ValueError:
         raise InvalidInputError("Index must be an integer")
     return index
+
+
+def get_validated_group_size(group_size):
+    """
+    Validates a group size to be an integer
+    :param group_size: the group size
+    :return: the given group size as an integer
+    :rtype: int
+    """
+    try:
+        group_size = int(group_size)
+        if group_size <= 0:
+            raise InvalidInputError("Group size must be greater than zero")
+    except ValueError:
+        raise InvalidInputError("Group size must be an integer")
+    return group_size

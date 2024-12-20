@@ -9,7 +9,7 @@ from ui.application_ui import ApplicationUI
 
 
 def print_menu():
-    print("Airport management - 2nd iteration")
+    print("Airport management - 3rd iteration")
     print("----------------------------------")
     print("-------Passenger operations-------")
     print("1. Add a passenger")
@@ -31,6 +31,9 @@ def print_menu():
     print("15. Find planes on which there exists passengers with equal prefix of length 3 of the passport number")
     print("16. Find passengers on a plane which contain in the first or last name a given string")
     print("17. Find all planes boarded by a passenger with the given name")
+    print("---------Miscellaneous----------")
+    print("18. Form groups of given size from passengers on a plane but with differing last names")
+    print("19. Form groups of given size from planes with the same destination but different airline companies")
     print("0. Exit")
     print("----------------------------------")
 
@@ -111,6 +114,10 @@ def execute_command(application_ui):
         return application_ui.get_passengers_on_plane_containing_string()
     elif choice == "17":
         return application_ui.get_all_planes_containing_passenger_with_name()
+    elif choice == "18":
+        return application_ui.generate_groups_of_passengers_with_differing_last_names()
+    elif choice == "19":
+        return application_ui.generate_groups_of_planes_with_same_destination_and_differing_airline()
     elif choice == "0":
         exit(0)
     else:
